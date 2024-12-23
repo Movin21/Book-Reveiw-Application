@@ -618,11 +618,38 @@ _c = StarDisplay;
 function ReviewList({ setEditingReview }) {
     _s();
     const [reviews, setReviews] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [filteredReviews, setFilteredReviews] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [sortOrder, setSortOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])("newest");
+    const [filterRating, setFilterRating] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])("");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ReviewList.useEffect": ()=>{
             fetchReviews();
         }
     }["ReviewList.useEffect"], []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ReviewList.useEffect": ()=>{
+            let sortedReviews = [
+                ...reviews
+            ];
+            // Sort by date
+            sortedReviews.sort({
+                "ReviewList.useEffect": (a, b)=>{
+                    return sortOrder === "newest" ? new Date(b.dateAdded) - new Date(a.dateAdded) : new Date(a.dateAdded) - new Date(b.dateAdded);
+                }
+            }["ReviewList.useEffect"]);
+            // Filter by rating
+            if (filterRating) {
+                sortedReviews = sortedReviews.filter({
+                    "ReviewList.useEffect": (review)=>review.rating === parseInt(filterRating)
+                }["ReviewList.useEffect"]);
+            }
+            setFilteredReviews(sortedReviews);
+        }
+    }["ReviewList.useEffect"], [
+        reviews,
+        sortOrder,
+        filterRating
+    ]);
     const fetchReviews = async ()=>{
         try {
             const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].get(__TURBOPACK__imported__module__$5b$project$5d2f$constants$2f$api$2e$js__$5b$client$5d$__$28$ecmascript$29$__["ENDPOINTS"].GET_REVIEWS);
@@ -630,19 +657,6 @@ function ReviewList({ setEditingReview }) {
         } catch (error) {
             console.error("Failed to fetch reviews:", error);
         }
-    };
-    const handleDelete = async (id)=>{
-        if (confirm("Are you sure you want to delete this review?")) {
-            try {
-                await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].delete(__TURBOPACK__imported__module__$5b$project$5d2f$constants$2f$api$2e$js__$5b$client$5d$__$28$ecmascript$29$__["ENDPOINTS"].DELETE_REVIEW(id));
-                setReviews(reviews.filter((review)=>review._id !== id));
-            } catch (error) {
-                console.error("Failed to delete review:", error);
-            }
-        }
-    };
-    const handleEdit = (review)=>{
-        setEditingReview(review);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-6",
@@ -652,10 +666,137 @@ function ReviewList({ setEditingReview }) {
                 children: "Book Reviews"
             }, void 0, false, {
                 fileName: "[project]/components/ReviewList.js",
-                lineNumber: 58,
+                lineNumber: 66,
                 columnNumber: 7
             }, this),
-            reviews.length > 0 ? reviews.map((review)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex justify-between mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "mr-2 text-lg",
+                                children: "Sort by:"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ReviewList.js",
+                                lineNumber: 72,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                value: sortOrder,
+                                onChange: (e)=>setSortOrder(e.target.value),
+                                className: "bg-blue-500 text-white px-4 py-2 rounded cursor-pointer",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "newest",
+                                        children: "Newest"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 78,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "oldest",
+                                        children: "Oldest"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 79,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/ReviewList.js",
+                                lineNumber: 73,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/ReviewList.js",
+                        lineNumber: 71,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "mr-2 text-lg",
+                                children: "Filter by Rating:"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ReviewList.js",
+                                lineNumber: 85,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                value: filterRating,
+                                onChange: (e)=>setFilterRating(e.target.value),
+                                className: "bg-white text-blue-500 px-4 py-2 border rounded cursor-pointer",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "All"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 91,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "5",
+                                        children: "5 Stars"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 92,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "4",
+                                        children: "4 Stars"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 93,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "3",
+                                        children: "3 Stars"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 94,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "2",
+                                        children: "2 Stars"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 95,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "1",
+                                        children: "1 Star"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ReviewList.js",
+                                        lineNumber: 96,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/ReviewList.js",
+                                lineNumber: 86,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/ReviewList.js",
+                        lineNumber: 84,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/ReviewList.js",
+                lineNumber: 69,
+                columnNumber: 7
+            }, this),
+            filteredReviews.length > 0 ? filteredReviews.map((review)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "mb-4 border p-4 rounded-lg",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -663,7 +804,7 @@ function ReviewList({ setEditingReview }) {
                             children: review.bookTitle
                         }, void 0, false, {
                             fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 62,
+                            lineNumber: 105,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -674,14 +815,14 @@ function ReviewList({ setEditingReview }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 63,
+                            lineNumber: 106,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StarDisplay, {
                             rating: review.rating
                         }, void 0, false, {
                             fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 64,
+                            lineNumber: 107,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -689,7 +830,7 @@ function ReviewList({ setEditingReview }) {
                             children: review.reviewText
                         }, void 0, false, {
                             fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 65,
+                            lineNumber: 108,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -697,56 +838,29 @@ function ReviewList({ setEditingReview }) {
                             children: new Date(review.dateAdded).toLocaleDateString()
                         }, void 0, false, {
                             fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 66,
-                            columnNumber: 13
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mt-4",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>handleEdit(review),
-                                    className: "bg-yellow-500 text-white px-4 py-2 rounded mr-2",
-                                    children: "Edit"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/ReviewList.js",
-                                    lineNumber: 70,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>handleDelete(review._id),
-                                    className: "bg-red-500 text-white px-4 py-2 rounded",
-                                    children: "Delete"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/ReviewList.js",
-                                    lineNumber: 76,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/ReviewList.js",
-                            lineNumber: 69,
+                            lineNumber: 109,
                             columnNumber: 13
                         }, this)
                     ]
                 }, review._id, true, {
                     fileName: "[project]/components/ReviewList.js",
-                    lineNumber: 61,
+                    lineNumber: 104,
                     columnNumber: 11
                 }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: "No reviews found."
             }, void 0, false, {
                 fileName: "[project]/components/ReviewList.js",
-                lineNumber: 86,
+                lineNumber: 115,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ReviewList.js",
-        lineNumber: 57,
+        lineNumber: 65,
         columnNumber: 5
     }, this);
 }
-_s(ReviewList, "FPrwLLWcZBXrtWYcIRYMKBd2Ocw=");
+_s(ReviewList, "u9JqMqpcuhG6Mx/DqPO4eq+etdE=");
 _c1 = ReviewList;
 var _c, _c1;
 __turbopack_refresh__.register(_c, "StarDisplay");
