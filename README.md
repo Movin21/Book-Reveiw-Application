@@ -32,7 +32,7 @@ npm run dev
 - **User Authentication & Authorization**
 - **Add, Edit, and Delete Book Reviews**
 - **View All Book Reviews**
-- **Search for Book Reviews**
+- **Filtering for Book Reviews**
 - **Responsive Design** – Works on both mobile and desktop
 
 ### Submit Form Changes
